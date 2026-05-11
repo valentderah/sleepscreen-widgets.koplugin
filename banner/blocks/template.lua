@@ -1,0 +1,31 @@
+local Font = require("ui/font")
+local VerticalSpan = require("ui/widget/verticalspan")
+
+local BannerText = require("banner.text")
+
+local M = {}
+
+function M.register(Registry)
+    Registry.register("template", function(params, ctx)
+        local pattern = params.pattern
+        if type(pattern) ~= "string" or pattern == "" then
+            return VerticalSpan:new{ width = 1 }
+        end
+        local B_SETT = ctx.B_SETT
+        local HL_SETT = ctx.HL_SETT
+        local face
+        if params.font_face and params.font_size then
+            face = Font:getFace(params.font_face, params.font_size)
+        elseif params.role == "stats" then
+            face = Font:getFace(B_SETT.stats_fontFace, B_SETT.stats_fontSize)
+                or Font:getFace("cfont", 17)
+        else
+            face = Font:getFace(B_SETT.title_fontFace, B_SETT.title_fontSize)
+                or Font:getFace("cfont", 30)
+        end
+        local text = BannerText.expand_string(ctx.ui_inst, pattern, ctx.last_file) or ""
+        return BannerText.buildTextField(B_SETT, HL_SETT, text, face, ctx.cell_max_h, ctx.cell_max_w, true)
+    end)
+end
+
+return M

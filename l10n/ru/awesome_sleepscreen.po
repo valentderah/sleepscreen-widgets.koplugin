@@ -1,0 +1,126 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Awesome sleepscreen"
+msgstr "Awesome Sleepscreen"
+
+msgid "Awesome sleepscreen (sleep banner)"
+msgstr "Awesome Sleepscreen (баннер сна)"
+
+msgid "3×3 sleep banner grid, blocks (digital/analog clock, templates, highlights), and optional PIN after wake."
+msgstr "Сетка баннера сна 3×3, блоки (цифровые и аналоговые часы, шаблоны, подсветки) и необязательный PIN после пробуждения."
+
+msgid "When ON, replaces the sleep-screen banner with the 3×3 grid layout when KOReader uses Banner message mode."
+msgstr "Если включено, баннер экрана сна заменяется сеткой 3×3 при режиме сообщения «Banner» в KOReader."
+
+msgid "Sleep screen layout"
+msgstr "Макет экрана сна"
+
+msgid "Grid zones and banner appearance."
+msgstr "Зоны сетки и оформление баннера."
+
+msgid "Wake lock (PIN)"
+msgstr "Блокировка при пробуждении (PIN)"
+
+msgid "Optional PIN after device resume."
+msgstr "Необязательный PIN после выхода из сна."
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Custom sleepscreen banner"
+msgstr "Пользовательский баннер экрана сна"
+
+msgid "Kobo-style sleep screen banner with presets and custom templates."
+msgstr "Баннер экрана сна в стиле Kobo с пресетами и своими шаблонами."
+
+msgid "Enable Kobo-style banner"
+msgstr "Включить баннер в стиле Kobo"
+
+msgid "When ON, replaces the sleep-screen banner text with the framed layout (cover/random/document-cover wallpapers + Banner message mode)."
+msgstr "Если включено, текст баннера на экране сна заменяется оформленной рамкой (обложка/случайное изображение/обложка документа и режим сообщения «Banner»)."
+
+msgid "Preset: Name, progress & quote"
+msgstr "Пресет: название, прогресс и цитата"
+
+msgid "Preset: Name & progress only"
+msgstr "Пресет: только название и прогресс"
+
+msgid "Preset: Absolute custom"
+msgstr "Пресет: полностью вручную"
+
+msgid "Edit title template…"
+msgstr "Изменить шаблон заголовка…"
+
+msgid "Title template"
+msgstr "Шаблон заголовка"
+
+msgid "%T %c KOReader codes; empty = use preset title line."
+msgstr "Коды KOReader как в сообщении экрана сна; пусто — строка заголовка из пресета."
+
+msgid "Edit stats line template…"
+msgstr "Изменить шаблон строки прогресса…"
+
+msgid "Stats line template"
+msgstr "Шаблон строки прогресса"
+
+msgid "KOReader codes; empty = keep KOReader sleep message text."
+msgstr "Коды KOReader; пусто — оставить текст из настроек сообщения экрана сна."
+
+msgid "Edit quote footer template…"
+msgstr "Изменить шаблон подписи к цитате…"
+
+msgid "Quote footer template"
+msgstr "Шаблон подписи под цитатой"
+
+msgid "Use %DT %HM %PG %C %A %T — see reference."
+msgstr "Используйте %DT %HM %PG %C %A %T — см. справку."
+
+msgid "Placeholder keys reference"
+msgstr "Справка по плейсхолдерам"
+
+msgid "Sleep screen placeholder codes"
+msgstr "Коды подстановки экрана сна"
+
+msgid "Custom Kobo-style banner"
+msgstr "Баннер в стиле Kobo"
+
+msgid "Banner presets for the sleep screen message (Banner layout)."
+msgstr "Пресеты баннера для сообщения экрана сна (режим Banner)."
+
+msgid "Title & stats lines use the same codes as the KOReader sleep screen message editor:\n\n"
+msgstr "Строки заголовка и прогресса используют те же коды, что редактор сообщения экрана сна в KOReader:\n\n"
+
+msgid "\n\n\nQuote footer (under the highlight) uses doubled percents so it does not clash with KOReader codes:\n\n"
+msgstr "\n\n\nПодпись под цитатой использует двойной символ процента, чтобы не пересекаться с кодами KOReader:\n\n"
+
+msgid "Analog clock"
+msgstr "Аналоговые часы"
+
+msgid "Analog dial diameter % (50–100)…"
+msgstr "Диаметр аналогового циферблата, % (50–100)…"
+
+msgid "Dial diameter"
+msgstr "Диаметр циферблата (%)"
+
+msgid "Widget corner radius (px)"
+msgstr "Скругление углов виджета (px)"
+
+msgid "Widget corner radius"
+msgstr "Скругление углов виджета"
+
+msgid "Widget padding (px)"
+msgstr "Внутренний отступ виджета (px)"
+
+msgid "Widget padding"
+msgstr "Внутренний отступ виджета"
+
+msgid "Widget vertical gap (px)"
+msgstr "Вертикальный зазор между виджетами (px)"
+
+msgid "Widget vertical gap"
+msgstr "Вертикальный зазор между виджетами"

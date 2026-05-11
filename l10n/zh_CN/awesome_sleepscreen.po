@@ -1,0 +1,126 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Awesome sleepscreen"
+msgstr "Awesome Sleepscreen"
+
+msgid "Awesome sleepscreen (sleep banner)"
+msgstr "Awesome Sleepscreen（睡眠横幅）"
+
+msgid "3×3 sleep banner grid, blocks (digital/analog clock, templates, highlights), and optional PIN after wake."
+msgstr "3×3 睡眠横幅网格、区块（数字/模拟时钟、模板、摘录高亮）以及唤醒后的可选 PIN。"
+
+msgid "When ON, replaces the sleep-screen banner with the 3×3 grid layout when KOReader uses Banner message mode."
+msgstr "开启后，当 KOReader 使用 Banner 消息模式时，用 3×3 网格布局替换睡眠横幅。"
+
+msgid "Sleep screen layout"
+msgstr "睡眠屏幕布局"
+
+msgid "Grid zones and banner appearance."
+msgstr "网格分区与横幅外观。"
+
+msgid "Wake lock (PIN)"
+msgstr "唤醒锁定（PIN）"
+
+msgid "Optional PIN after device resume."
+msgstr "设备唤醒后可选择输入 PIN。"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Custom sleepscreen banner"
+msgstr "自定义睡眠屏幕横幅"
+
+msgid "Kobo-style sleep screen banner with presets and custom templates."
+msgstr "Kobo 风格的睡眠屏幕横幅，支持预设与自定义模板。"
+
+msgid "Enable Kobo-style banner"
+msgstr "启用 Kobo 风格横幅"
+
+msgid "When ON, replaces the sleep-screen banner text with the framed layout (cover/random/document-cover wallpapers + Banner message mode)."
+msgstr "开启后，用带边框样式替换睡眠屏幕横幅文字（壁纸为封面/随机图/文档封面，且消息容器为 Banner）。"
+
+msgid "Preset: Name, progress & quote"
+msgstr "预设：书名、进度与摘录"
+
+msgid "Preset: Name & progress only"
+msgstr "预设：仅书名与进度"
+
+msgid "Preset: Absolute custom"
+msgstr "预设：完全自定义"
+
+msgid "Edit title template…"
+msgstr "编辑标题模板…"
+
+msgid "Title template"
+msgstr "标题模板"
+
+msgid "%T %c KOReader codes; empty = use preset title line."
+msgstr "KOReader 占位符（与睡眠屏幕消息相同）；留空则使用预设标题行。"
+
+msgid "Edit stats line template…"
+msgstr "编辑进度行模板…"
+
+msgid "Stats line template"
+msgstr "进度行模板"
+
+msgid "KOReader codes; empty = keep KOReader sleep message text."
+msgstr "KOReader 占位符；留空则沿用设置里的睡眠屏幕消息文本。"
+
+msgid "Edit quote footer template…"
+msgstr "编辑摘录脚注模板…"
+
+msgid "Quote footer template"
+msgstr "摘录脚注模板"
+
+msgid "Use %DT %HM %PG %C %A %T — see reference."
+msgstr "使用 %DT %HM %PG %C %A %T — 详见参考说明。"
+
+msgid "Placeholder keys reference"
+msgstr "占位符说明"
+
+msgid "Sleep screen placeholder codes"
+msgstr "睡眠屏幕占位符说明"
+
+msgid "Custom Kobo-style banner"
+msgstr "自定义 Kobo 风格横幅"
+
+msgid "Banner presets for the sleep screen message (Banner layout)."
+msgstr "睡眠屏幕消息（Banner 布局）的横幅预设。"
+
+msgid "Title & stats lines use the same codes as the KOReader sleep screen message editor:\n\n"
+msgstr "标题与进度行使用与 KOReader「睡眠屏幕消息」编辑器相同的代码：\n\n"
+
+msgid "\n\n\nQuote footer (under the highlight) uses doubled percents so it does not clash with KOReader codes:\n\n"
+msgstr "\n\n\n摘录脚注使用双百分号，以免与 KOReader 的消息占位符冲突：\n\n"
+
+msgid "Analog clock"
+msgstr "模拟时钟"
+
+msgid "Analog dial diameter % (50–100)…"
+msgstr "模拟表盘直径 %（50–100）…"
+
+msgid "Dial diameter"
+msgstr "表盘直径（%）"
+
+msgid "Widget corner radius (px)"
+msgstr "小组件圆角（像素）"
+
+msgid "Widget corner radius"
+msgstr "小组件圆角"
+
+msgid "Widget padding (px)"
+msgstr "小组件内边距（像素）"
+
+msgid "Widget padding"
+msgstr "小组件内边距"
+
+msgid "Widget vertical gap (px)"
+msgstr "小组件垂直间距（像素）"
+
+msgid "Widget vertical gap"
+msgstr "小组件垂直间距"
