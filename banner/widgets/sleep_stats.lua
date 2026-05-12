@@ -2,6 +2,7 @@ local Font = require("ui/font")
 local VerticalSpan = require("ui/widget/verticalspan")
 
 local BannerText = require("banner.text")
+local FrameStyle = require("banner.frame_style")
 
 local M = {}
 
@@ -20,7 +21,19 @@ function M.register(Registry)
         if text == "" then
             return VerticalSpan:new{ width = 1 }
         end
-        return BannerText.buildTextField(B_SETT, HL_SETT, text, face, ctx.cell_max_h, ctx.cell_max_w, false)
+        local pal = ctx.card_palette or FrameStyle.card_colors_light()
+        return BannerText.buildTextField(
+            B_SETT,
+            HL_SETT,
+            text,
+            face,
+            ctx.cell_max_h,
+            ctx.cell_max_w,
+            false,
+            false,
+            pal.text_primary,
+            pal.fill
+        )
     end)
 end
 

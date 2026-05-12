@@ -121,15 +121,53 @@ function MenuLayout.buildAppearanceSubmenu()
     })
 
     table.insert(items, {
-        text = _("Widget vertical gap (px)"),
+        text = _("Default grid / widget gap (px)"),
         callback = function()
-            edit_banner_number(_("Widget vertical gap"), function()
+            edit_banner_number(_("Default gap"), function()
                 return Settings:effectiveBanner().widget_gap or 6
             end, function(n)
                 n = math.max(0, math.min(24, math.floor(n)))
                 local lua = Settings:open()
                 local banner = lua:readSetting("banner") or {}
                 banner.widget_gap = n
+                lua:saveSetting("banner", banner)
+                Settings:flush()
+            end)
+        end,
+    })
+
+    table.insert(items, {
+        text = _("Grid column gap (px, 0 = default gap)"),
+        callback = function()
+            edit_banner_number(_("Column gap"), function()
+                local lua = Settings:open()
+                local b = lua:readSetting("banner") or {}
+                if b.grid_gutter_x ~= nil then return b.grid_gutter_x end
+                return Settings:effectiveBanner().widget_gap or 6
+            end, function(n)
+                n = math.max(0, math.min(24, math.floor(n)))
+                local lua = Settings:open()
+                local banner = lua:readSetting("banner") or {}
+                banner.grid_gutter_x = n == 0 and nil or n
+                lua:saveSetting("banner", banner)
+                Settings:flush()
+            end)
+        end,
+    })
+
+    table.insert(items, {
+        text = _("Grid row gap (px, 0 = default gap)"),
+        callback = function()
+            edit_banner_number(_("Row gap"), function()
+                local lua = Settings:open()
+                local b = lua:readSetting("banner") or {}
+                if b.grid_gutter_y ~= nil then return b.grid_gutter_y end
+                return Settings:effectiveBanner().widget_gap or 6
+            end, function(n)
+                n = math.max(0, math.min(24, math.floor(n)))
+                local lua = Settings:open()
+                local banner = lua:readSetting("banner") or {}
+                banner.grid_gutter_y = n == 0 and nil or n
                 lua:saveSetting("banner", banner)
                 Settings:flush()
             end)
@@ -143,7 +181,7 @@ function MenuLayout.buildLayoutRootSubmenu(_plugin_inst)
     require("l10n").load()
     return {
         {
-            text = _("Grid zones (3×3)"),
+            text = _("Sleep banner grid (6×3)"),
             sub_item_table_func = function()
                 return GridEditor.gridZonesMenu()
             end,

@@ -85,7 +85,7 @@ local function patched_show(self, widget, ...)
     local orig_sleep_text = orig_sleep_widget.text
     orig_sleep_widget:free()
 
-    local zones = Settings:getGridZones()
+    local placements = Settings:getGridPlacements()
     local ctx = {
         B_SETT = B_SETT,
         HL_SETT = HL_SETT,
@@ -98,7 +98,7 @@ local function patched_show(self, widget, ...)
         grid_inner_h = screen_h,
     }
 
-    local content_widget = GridComposer.compose(zones, ctx)
+    local content_widget = GridComposer.compose(placements, ctx)
 
     cus_pos_container.horizontal_position = 0.5
     cus_pos_container.vertical_position = 0

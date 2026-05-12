@@ -8,8 +8,8 @@ msgstr "Awesome Sleepscreen"
 msgid "Awesome sleepscreen (sleep banner)"
 msgstr "Awesome Sleepscreen（睡眠横幅）"
 
-msgid "3×3 sleep banner grid, blocks (digital/analog clock, templates, highlights), and optional PIN after wake."
-msgstr "3×3 睡眠横幅网格、区块（数字/模拟时钟、模板、摘录高亮）以及唤醒后的可选 PIN。"
+msgid "3×3 sleep banner grid with Frame-style widget cards: clocks, templates, highlights, date/battery/book/calendar, and reading time."
+msgstr "3×3 睡眠横幅网格：Frame 风格小组件卡片，含时钟、模板、摘录、日期/电量/书籍/日历及阅读时长。"
 
 msgid "When ON, replaces the sleep-screen banner with the 3×3 grid layout when KOReader uses Banner message mode."
 msgstr "开启后，当 KOReader 使用 Banner 消息模式时，用 3×3 网格布局替换睡眠横幅。"
@@ -19,12 +19,6 @@ msgstr "睡眠屏幕布局"
 
 msgid "Grid zones and banner appearance."
 msgstr "网格分区与横幅外观。"
-
-msgid "Wake lock (PIN)"
-msgstr "唤醒锁定（PIN）"
-
-msgid "Optional PIN after device resume."
-msgstr "设备唤醒后可选择输入 PIN。"
 
 msgid "Cancel"
 msgstr "取消"
@@ -124,3 +118,90 @@ msgstr "小组件垂直间距（像素）"
 
 msgid "Widget vertical gap"
 msgstr "小组件垂直间距"
+
+msgid "Move widget up"
+msgstr "上移小组件"
+
+msgid "Move widget down"
+msgstr "下移小组件"
+
+msgid "Remove widget"
+msgstr "移除小组件"
+
+msgid "Add widget…"
+msgstr "添加小组件…"
+
+msgid "READING · TODAY"
+msgstr "今日阅读 ·"
+
+msgid "MIN"
+msgstr "分钟"
+
+msgid "No book open"
+msgstr "未打开书籍"
+
+msgid "Untitled"
+msgstr "无标题"
+
+msgid "6×3 sleep banner grid with Frame-style widget cards (1–3 column wide widgets): clocks, templates, highlights, date/battery/book/calendar, and reading time."
+msgstr "6×3 睡眠横幅网格：Frame 风格小组件卡片（1–3 列宽），含时钟、模板、摘录、日期/电量/书籍/日历及阅读时长。"
+
+msgid "When ON, replaces the sleep-screen banner with the 6×3 grid layout when KOReader uses Banner message mode."
+msgstr "开启后，当 KOReader 使用 Banner 消息模式时，用 6×3 网格布局替换睡眠横幅。"
+
+msgid "Sleep banner grid (6×3)"
+msgstr "睡眠横幅网格（6×3）"
+
+msgid "Default grid / widget gap (px)"
+msgstr "默认网格/小组件间距（像素）"
+
+msgid "Default gap"
+msgstr "默认间距"
+
+msgid "Grid column gap (px, 0 = default gap)"
+msgstr "网格列间距（像素，0 表示使用默认）"
+
+msgid "Column gap"
+msgstr "列间距"
+
+msgid "Grid row gap (px, 0 = default gap)"
+msgstr "网格行间距（像素，0 表示使用默认）"
+
+msgid "Row gap"
+msgstr "行间距"
+
+msgid "Not enough space for this widget here."
+msgstr "此处空间不足以放置该小组件。"
+
+msgid "That width does not fit here."
+msgstr "该宽度在此处放不下。"
+
+msgid "Widget width: 1 column"
+msgstr "小组件宽度：1 列"
+
+msgid "Widget width: 2 columns"
+msgstr "小组件宽度：2 列"
+
+msgid "Widget width: 3 columns"
+msgstr "小组件宽度：3 列"
+
+msgid "Row %d, column %d — empty"
+msgstr "第 %d 行，第 %d 列 — 空"
+
+msgid "Row %d, column %d — %s (%d cols)"
+msgstr "第 %d 行，第 %d 列 — %s（%d 列）"
+
+msgid "Row %d, column %d — %s"
+msgstr "第 %d 行，第 %d 列 — %s"
+
+msgid "Row %d, column %d — (wider widget @ %d,%d)"
+msgstr "第 %d 行，第 %d 列 —（较宽小组件位于 %d,%d）"
+
+msgid "This cell is part of a widget anchored at row %d, column %d."
+msgstr "此格子属于锚定在第 %d 行、第 %d 列的小组件。"
+
+msgid "Edit…"
+msgstr "编辑…"
+
+msgid "Row %d"
+msgstr "第 %d 行"

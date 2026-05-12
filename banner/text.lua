@@ -1,4 +1,4 @@
---[[ Shared text helpers for sleep banner blocks (KOReader). ]]
+--[[ Shared text helpers for sleep banner widgets (KOReader). ]]
 local BookInfo = require("apps/filemanager/filemanagerbookinfo")
 local datetime = require("datetime")
 local TextBoxWidget = require("ui/widget/textboxwidget")
@@ -81,10 +81,35 @@ function BannerText.parseFooterText(text, index, Sidecar)
     return text
 end
 
-function BannerText.buildTextField(B_SETT, HL_SETT, text, font_face, max_height, max_wid, ignoreLineBreaks, isHighlight, text_color)
+function BannerText.buildTextField(B_SETT, HL_SETT, text, font_face, max_height, max_wid, ignoreLineBreaks, isHighlight, text_color, bgcolor_override)
     local Bb = require("ffi/blitbuffer")
+    if font_face == nil then
+        local Font = require("ui/font")
+        font_face = Font:getFace("cfont", 20)
+    end
     local wgt_grp = VerticalGroup:new{ align = "left" }
     text = text:gsub("\\n", "\n")
+    local default_fg = Bb.COLOR_BLACK
+    local default_bg = Bb.COLOR_WHITE
+    if type(B_SETT) == "table" and B_SETT.background == 1 then
+        default_fg = Bb.COLOR_WHITE
+        default_bg = Bb.COLOR_BLACK
+    end
+    -- BlitBuffer colors are userdata with __eq: never use `c == nil` (invokes __eq(self, nil) → crash).
+    local fg = default_fg
+    if not rawequal(text_color, nil) and not (type(text_color) == "boolean" and text_color == false) then
+        fg = text_color
+    end
+    local bg = default_bg
+    if not rawequal(bgcolor_override, nil) and not (type(bgcolor_override) == "boolean" and bgcolor_override == false) then
+        bg = bgcolor_override
+    end
+    if rawequal(fg, nil) then
+        fg = Bb.COLOR_BLACK
+    end
+    if rawequal(bg, nil) then
+        bg = Bb.COLOR_WHITE
+    end
     local segments = ignoreLineBreaks and { text } or util.splitToArray(text, "\n")
     for _, item in ipairs(segments) do
         local wgt = TextWidget:new{
@@ -92,8 +117,8 @@ function BannerText.buildTextField(B_SETT, HL_SETT, text, font_face, max_height,
             text = item,
             face = font_face,
             alignment = "left",
-            fgcolor = text_color or (B_SETT.background == 1 and Bb.COLOR_WHITE or Bb.COLOR_BLACK),
-            bgcolor = B_SETT.background == 0 and Bb.COLOR_WHITE or Bb.COLOR_BLACK,
+            fgcolor = fg,
+            bgcolor = bg,
         }
         if wgt:getSize().w > max_wid then
             wgt:free()
@@ -105,9 +130,9 @@ function BannerText.buildTextField(B_SETT, HL_SETT, text, font_face, max_height,
                 height = max_height,
                 height_adjust = true,
                 height_overflow_show_ellipsis = true,
-                justified = isHighlight and HL_SETT.justify,
-                fgcolor = text_color or (B_SETT.background == 1 and Bb.COLOR_WHITE or Bb.COLOR_BLACK),
-                bgcolor = B_SETT.background == 0 and Bb.COLOR_WHITE or Bb.COLOR_BLACK,
+                justified = isHighlight and type(HL_SETT) == "table" and HL_SETT.justify,
+                fgcolor = fg,
+                bgcolor = bg,
             }
         end
         table.insert(wgt_grp, wgt)

@@ -2,6 +2,7 @@ local Font = require("ui/font")
 local VerticalSpan = require("ui/widget/verticalspan")
 
 local BannerText = require("banner.text")
+local FrameStyle = require("banner.frame_style")
 
 local M = {}
 
@@ -23,8 +24,21 @@ function M.register(Registry)
             face = Font:getFace(B_SETT.title_fontFace, B_SETT.title_fontSize)
                 or Font:getFace("cfont", 30)
         end
+        face = face or Font:getFace("cfont", 30)
         local text = BannerText.expand_string(ctx.ui_inst, pattern, ctx.last_file) or ""
-        return BannerText.buildTextField(B_SETT, HL_SETT, text, face, ctx.cell_max_h, ctx.cell_max_w, true)
+        local pal = ctx.card_palette or FrameStyle.card_colors_light()
+        return BannerText.buildTextField(
+            B_SETT,
+            HL_SETT,
+            text,
+            face,
+            ctx.cell_max_h,
+            ctx.cell_max_w,
+            true,
+            false,
+            pal.text_primary,
+            pal.fill
+        )
     end)
 end
 
