@@ -4,7 +4,6 @@ local UIManager = require("ui/uimanager")
 local Settings = require("settings")
 
 local MenuLayout = require("menu.menu_layout")
-local MenuLock = require("menu.menu_lock")
 local placeholder_help = require("placeholders")
 
 local _ = require("l10n").gettext
@@ -15,7 +14,7 @@ function MenuSleep.buildEnableToggleEntry()
     require("l10n").load()
     return {
         text = _("Awesome sleepscreen (sleep banner)"),
-        help_text = _("When ON, replaces the sleep-screen banner with the 3×3 grid layout when KOReader uses Banner message mode."),
+        help_text = _("When ON, replaces the sleep-screen banner with the 6×3 grid layout when KOReader uses Banner message mode."),
         checked_func = function()
             return Settings:isPluginEnabled()
         end,
@@ -32,17 +31,6 @@ function MenuSleep.buildLayoutRootEntry(plugin_inst)
         help_text = _("Grid zones and banner appearance."),
         sub_item_table_func = function()
             return MenuLayout.buildLayoutRootSubmenu(plugin_inst)
-        end,
-    }
-end
-
-function MenuSleep.buildLockRootEntry(_plugin_inst)
-    require("l10n").load()
-    return {
-        text = _("Wake lock (PIN)"),
-        help_text = _("Optional PIN after device resume."),
-        sub_item_table_func = function()
-            return MenuLock.buildLockSubmenu()
         end,
     }
 end
@@ -72,7 +60,6 @@ function MenuSleep.buildFallbackCombinedEntry(plugin_inst)
             return {
                 MenuSleep.buildEnableToggleEntry(),
                 MenuSleep.buildLayoutRootEntry(plugin_inst),
-                MenuSleep.buildLockRootEntry(plugin_inst),
                 MenuSleep.buildHelpEntry(),
             }
         end,

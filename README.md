@@ -2,20 +2,20 @@ English | [Русский](README.ru.md)
 
 # Awesome Sleepscreen
 
-A [KOReader](https://github.com/koreader/koreader) plugin that replaces the default **sleep-screen banner** with a configurable **3×3 grid** of blocks—iOS-style rounded widget **cards**, optional **wake lock (PIN)**, and varied content (clocks, templates, quotes from the book, sleep stats).
+A [KOReader](https://github.com/koreader/koreader) plugin that replaces the default **sleep-screen banner** with a configurable **6×3 grid** of **widgets**—rounded **cards** in a Frame-like style. Each cell holds at most one widget; widgets can span **1–3 columns**. Included: clocks, templates, quotes from the book, sleep stats, date/time header, battery, current book, a calendar tile, and daily reading time.
 
 ## Features
 
-- **3×3 grid** — Each cell can hold a vertical stack of blocks; each block has its own card with configurable corner radius, inner padding, and gap between cards.
-- **Block types**
+- **6×3 grid** — Up to 18 slots; **horizontal span** 1–3 columns; row/column gutters configurable in banner appearance.
+- **Widget types**
   - **Template** — Free text with KOReader-style placeholders (like the sleep-message editor).
   - **Sleep stats** — Default sleep text or a custom template.
-  - **Quote** — A random saved quote from the current book.
+  - **Quote** — A random saved quote from the current book (highlights).
   - **Digital clock** — Time formatted with `strftime`.
   - **Analog clock** — Analog dial with hands (tested on e-ink).
+  - **Date & time header**, **Battery**, **Current book**, **Calendar tile**, **Reading time today** (statistics-based).
 - **Near full-screen layout** — The grid uses the full screen area (over cover/wallpaper); outer containers have no fill, so the screensaver background shows between cards.
-- **Optional PIN after wake** — Dimmed overlay and PIN entry. *The PIN is stored on the device in plain settings—this is not strong cryptography!*
-- **Localization** — English and Russian.
+- **Localization** — English, Russian, and Chinese (simplified).
 
 ## KOReader settings (must all match)
 

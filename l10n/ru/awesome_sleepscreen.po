@@ -8,8 +8,8 @@ msgstr "Awesome Sleepscreen"
 msgid "Awesome sleepscreen (sleep banner)"
 msgstr "Awesome Sleepscreen (баннер сна)"
 
-msgid "3×3 sleep banner grid, blocks (digital/analog clock, templates, highlights), and optional PIN after wake."
-msgstr "Сетка баннера сна 3×3, блоки (цифровые и аналоговые часы, шаблоны, подсветки) и необязательный PIN после пробуждения."
+msgid "3×3 sleep banner grid with Frame-style widget cards: clocks, templates, highlights, date/battery/book/calendar, and reading time."
+msgstr "Сетка баннера сна 3×3 с карточками виджетов в стиле Frame: часы, шаблоны, подсветки, дата/батарея/книга/календарь и время чтения."
 
 msgid "When ON, replaces the sleep-screen banner with the 3×3 grid layout when KOReader uses Banner message mode."
 msgstr "Если включено, баннер экрана сна заменяется сеткой 3×3 при режиме сообщения «Banner» в KOReader."
@@ -19,12 +19,6 @@ msgstr "Макет экрана сна"
 
 msgid "Grid zones and banner appearance."
 msgstr "Зоны сетки и оформление баннера."
-
-msgid "Wake lock (PIN)"
-msgstr "Блокировка при пробуждении (PIN)"
-
-msgid "Optional PIN after device resume."
-msgstr "Необязательный PIN после выхода из сна."
 
 msgid "Cancel"
 msgstr "Отмена"
@@ -124,3 +118,90 @@ msgstr "Вертикальный зазор между виджетами (px)"
 
 msgid "Widget vertical gap"
 msgstr "Вертикальный зазор между виджетами"
+
+msgid "Move widget up"
+msgstr "Сдвинуть виджет вверх"
+
+msgid "Move widget down"
+msgstr "Сдвинуть виджет вниз"
+
+msgid "Remove widget"
+msgstr "Удалить виджет"
+
+msgid "Add widget…"
+msgstr "Добавить виджет…"
+
+msgid "READING · TODAY"
+msgstr "ЧТЕНИЕ · СЕГОДНЯ"
+
+msgid "MIN"
+msgstr "МИН"
+
+msgid "No book open"
+msgstr "Нет открытой книги"
+
+msgid "Untitled"
+msgstr "Без названия"
+
+msgid "6×3 sleep banner grid with Frame-style widget cards (1–3 column wide widgets): clocks, templates, highlights, date/battery/book/calendar, and reading time."
+msgstr "Сетка баннера сна 6×3 с карточками виджетов в стиле Frame (ширина 1–3 колонки): часы, шаблоны, подсветки, дата/батарея/книга/календарь и время чтения."
+
+msgid "When ON, replaces the sleep-screen banner with the 6×3 grid layout when KOReader uses Banner message mode."
+msgstr "Если включено, баннер экрана сна заменяется сеткой 6×3 при режиме сообщения «Banner» в KOReader."
+
+msgid "Sleep banner grid (6×3)"
+msgstr "Сетка баннера сна (6×3)"
+
+msgid "Default grid / widget gap (px)"
+msgstr "Общий зазор сетки и виджетов (px)"
+
+msgid "Default gap"
+msgstr "Общий зазор"
+
+msgid "Grid column gap (px, 0 = default gap)"
+msgstr "Зазор между столбцами сетки (px, 0 = общий зазор)"
+
+msgid "Column gap"
+msgstr "Зазор столбцов"
+
+msgid "Grid row gap (px, 0 = default gap)"
+msgstr "Зазор между строками сетки (px, 0 = общий зазор)"
+
+msgid "Row gap"
+msgstr "Зазор строк"
+
+msgid "Not enough space for this widget here."
+msgstr "Недостаточно места для этого виджета."
+
+msgid "That width does not fit here."
+msgstr "Такая ширина здесь не помещается."
+
+msgid "Widget width: 1 column"
+msgstr "Ширина виджета: 1 колонка"
+
+msgid "Widget width: 2 columns"
+msgstr "Ширина виджета: 2 колонки"
+
+msgid "Widget width: 3 columns"
+msgstr "Ширина виджета: 3 колонки"
+
+msgid "Row %d, column %d — empty"
+msgstr "Строка %d, столбец %d — пусто"
+
+msgid "Row %d, column %d — %s (%d cols)"
+msgstr "Строка %d, столбец %d — %s (%d кол.)"
+
+msgid "Row %d, column %d — %s"
+msgstr "Строка %d, столбец %d — %s"
+
+msgid "Row %d, column %d — (wider widget @ %d,%d)"
+msgstr "Строка %d, столбец %d — (широкий виджет в %d,%d)"
+
+msgid "This cell is part of a widget anchored at row %d, column %d."
+msgstr "Эта ячейка — часть виджета с якорем в строке %d, столбце %d."
+
+msgid "Edit…"
+msgstr "Изменить…"
+
+msgid "Row %d"
+msgstr "Строка %d"

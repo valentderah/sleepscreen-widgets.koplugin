@@ -29,7 +29,6 @@ local function append_custom_entries(sub_item_table)
     local entries = {
         MenuSleep.buildEnableToggleEntry(),
         MenuSleep.buildLayoutRootEntry(plugin_inst),
-        MenuSleep.buildLockRootEntry(plugin_inst),
         MenuSleep.buildHelpEntry(),
     }
     for _, entry in ipairs(entries) do

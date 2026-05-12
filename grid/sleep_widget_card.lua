@@ -1,29 +1,26 @@
-local Blitbuffer = require("ffi/blitbuffer")
 local Geom = require("ui/geometry")
 local WidgetContainer = require("ui/widget/container/widgetcontainer")
 
+local FrameStyle = require("banner.frame_style")
 local CardGeometry = require("grid.card_geometry")
 
-local SleepBlockCard = WidgetContainer:extend{
-    name = "awesome_sleepscreen_sleep_block_card",
+local SleepWidgetCard = WidgetContainer:extend{
+    name = "awesome_sleepscreen_sleep_widget_card",
     B_SETT = nil,
     radius = 0,
     pad_h = 0,
     pad_v = 0,
 }
 
-function SleepBlockCard:init()
-    local b = self.B_SETT or {}
-    if b.background == 0 then
-        self.fill_c = Blitbuffer.COLOR_GRAY_E
-        self.border_c = Blitbuffer.COLOR_GRAY_5
-    else
-        self.fill_c = Blitbuffer.COLOR_GRAY_3
-        self.border_c = Blitbuffer.COLOR_GRAY_7
-    end
+function SleepWidgetCard:init()
+    -- Optional `palette` from SleepWidgetCard:new{ palette = dark_tile } (e.g. calendar).
+    self.palette = self.palette or FrameStyle.card_colors_light()
+    self.fill_c = self.palette.fill
+    self.border_c = self.palette.border
+    self.border_w = FrameStyle.card_border_width(self.B_SETT)
 end
 
-function SleepBlockCard:getSize()
+function SleepWidgetCard:getSize()
     local child = self[1]
     if not child or not child.getSize then
         return Geom:new{ x = 0, y = 0, w = 0, h = 0 }
@@ -36,7 +33,7 @@ function SleepBlockCard:getSize()
     return Geom:new{ x = 0, y = 0, w = ow, h = oh }
 end
 
-function SleepBlockCard:paintTo(bb, x, y)
+function SleepWidgetCard:paintTo(bb, x, y)
     local child = self[1]
     if not child or not child.getSize or not child.paintTo then
         return
@@ -51,8 +48,8 @@ function SleepBlockCard:paintTo(bb, x, y)
     end
     local r = self.radius or 0
     bb:paintRoundedRect(x, y, ow, oh, self.fill_c, r)
-    bb:paintBorder(x, y, ow, oh, 1, self.border_c, r, 0)
+    bb:paintBorder(x, y, ow, oh, self.border_w or FrameStyle.scale(4), self.border_c, r, 0)
     child:paintTo(bb, x + self.pad_h, y + self.pad_v)
 end
 
-return SleepBlockCard
+return SleepWidgetCard

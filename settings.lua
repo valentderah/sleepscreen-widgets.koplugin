@@ -1,10 +1,11 @@
---[[ Persistence for grid banner + banner chrome + wake lock. ]]
+--[[ Persistence for grid banner + banner chrome. ]]
 local DataStorage = require("datastorage")
 local LuaSettings = require("luasettings")
 local util = require("util")
 
 local Config = require("config")
 local GridModel = require("grid.grid_model")
+local Registry = require("banner.widgets.registry")
 
 local NEW_SETTINGS_BASENAME = "awesome_sleepscreen.lua"
 local LEGACY_SETTINGS_BASENAMES = {
@@ -55,7 +56,29 @@ function Settings:open()
     local sv = self._lua:readSetting("schema_version") or 0
     if sv < Config.SCHEMA_VERSION then
         if self._lua:readSetting("grid") == nil then
-            self._lua:saveSetting("grid", GridModel.emptyZones())
+            self._lua:saveSetting("grid", GridModel.emptySaved())
+        end
+        if sv < (Config.SCHEMA_GRID_PLACEMENTS_AT or 6) then
+            Registry.ensure_registered()
+            local raw = self._lua:readSetting("grid")
+            local placements = GridModel.parseSaved(raw, function(t)
+                return Registry.default_col_span(t)
+            end)
+            self._lua:saveSetting("grid", GridModel.wrapSaved(placements))
+        end
+        if sv < Config.SCHEMA_LOCK_KEYS_REMOVED_AT then
+            for _, k in ipairs({
+                "lock_enabled",
+                "lock_pin",
+                "lock_dim_level",
+                "lock_warn_seen",
+            }) do
+                if self._lua.delSetting then
+                    pcall(function()
+                        self._lua:delSetting(k)
+                    end)
+                end
+            end
         end
         self._lua:saveSetting("schema_version", Config.SCHEMA_VERSION)
         self._lua:flush()
@@ -85,55 +108,31 @@ function Settings:effectiveBanner()
     return b
 end
 
-function Settings:getGridZones()
+local function grid_default_span(type_id)
+    Registry.ensure_registered()
+    return Registry.default_col_span(type_id)
+end
+
+function Settings:getGridPlacements()
     local raw = self:open():readSetting("grid")
-    return GridModel.normalizeZones(raw)
+    return GridModel.parseSaved(raw, grid_default_span)
 end
 
+function Settings:saveGridPlacements(placements)
+    Registry.ensure_registered()
+    local norm = GridModel.normalizePlacements(placements, grid_default_span)
+    self:open():saveSetting("grid", GridModel.wrapSaved(norm))
+    self:flush()
+end
+
+---@deprecated use getGridPlacements
+function Settings:getGridZones()
+    return self:getGridPlacements()
+end
+
+---@deprecated use saveGridPlacements
 function Settings:saveGridZones(zones)
-    self:open():saveSetting("grid", GridModel.normalizeZones(zones))
-    self:flush()
-end
-
-function Settings:isLockEnabled()
-    return self:open():readSetting("lock_enabled") == true
-end
-
-function Settings:setLockEnabled(v)
-    self:open():saveSetting("lock_enabled", v and true or false)
-    self:flush()
-end
-
-function Settings:getLockPin()
-    return self:open():readSetting("lock_pin") or ""
-end
-
-function Settings:setLockPin(pin)
-    self:open():saveSetting("lock_pin", pin or "")
-    self:flush()
-end
-
-function Settings:getLockDimLevel()
-    local d = self:open():readSetting("lock_dim_level")
-    if type(d) ~= "number" or d < 1 or d > 4 then
-        return 3
-    end
-    return d
-end
-
-function Settings:setLockDimLevel(level)
-    level = math.max(1, math.min(4, math.floor(tonumber(level) or 3)))
-    self:open():saveSetting("lock_dim_level", level)
-    self:flush()
-end
-
-function Settings:isLockWarnSeen()
-    return self:open():readSetting("lock_warn_seen") == true
-end
-
-function Settings:setLockWarnSeen()
-    self:open():saveSetting("lock_warn_seen", true)
-    self:flush()
+    self:saveGridPlacements(zones)
 end
 
 return Settings

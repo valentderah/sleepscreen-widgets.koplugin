@@ -1,7 +1,11 @@
 --[[ Defaults for awesome-sleepscreen plugin (no preset migrations). ]]
 local Config = {}
 
-Config.SCHEMA_VERSION = 4
+Config.SCHEMA_VERSION = 6
+-- `lock_*` settings were removed at schema revision 5 (PIN / wake lock feature dropped).
+Config.SCHEMA_LOCK_KEYS_REMOVED_AT = 5
+-- Grid layout migrated from 9 stacked zones to 6×3 placements at revision 6.
+Config.SCHEMA_GRID_PLACEMENTS_AT = 6
 
 Config.DEFAULT_BANNER = {
     title_fontFace = "cfont",
@@ -19,6 +23,8 @@ Config.DEFAULT_BANNER = {
     widget_radius = 12,
     widget_padding = 8,
     widget_gap = 6,
+    grid_gutter_x = nil,
+    grid_gutter_y = nil,
 }
 
 Config.DEFAULT_HIGHLIGHT = {

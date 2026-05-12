@@ -1,4 +1,3 @@
-local Bb = require("ffi/blitbuffer")
 local Device = require("device")
 local Font = require("ui/font")
 local Geom = require("ui/geometry")
@@ -12,6 +11,7 @@ local VerticalGroup = require("ui/widget/verticalgroup")
 local VerticalSpan = require("ui/widget/verticalspan")
 
 local BannerText = require("banner.text")
+local FrameStyle = require("banner.frame_style")
 
 local cached_random_highlight_index = 1
 
@@ -64,7 +64,9 @@ function M.register(Registry)
         random_highlight = util.trim(random_highlight)
         random_highlight = HL_SETT.add_quotations and BannerText.addQuotesIfReq(random_highlight) or random_highlight
 
-        local footer_color = B_SETT.background == 0 and Bb.COLOR_GRAY_4 or Bb.COLOR_GRAY_9
+        local pal = ctx.card_palette or FrameStyle.card_colors_light()
+
+        local footer_color = pal.text_secondary
 
         local footer_tpl = HL_SETT.hl_footer_text or ""
         local hl_footer_enabled = HL_SETT.showHighlightFooter
@@ -73,7 +75,7 @@ function M.register(Registry)
 
         local hl_footer_widget
         if hl_footer_enabled then
-            local hyphen_wid = BannerText.buildTextField(B_SETT, HL_SETT, "— ", footer_font, ctx.cell_max_h, ctx.cell_max_w, true, false, footer_color)
+            local hyphen_wid = BannerText.buildTextField(B_SETT, HL_SETT, "— ", footer_font, ctx.cell_max_h, ctx.cell_max_w, true, false, footer_color, pal.fill)
             hl_footer_widget = BannerText.buildTextField(
                 B_SETT,
                 HL_SETT,
@@ -83,7 +85,8 @@ function M.register(Registry)
                 ctx.cell_max_w - hyphen_wid:getSize().w,
                 false,
                 false,
-                footer_color
+                footer_color,
+                pal.fill
             )
             hl_footer_widget = HorizontalGroup:new{
                 align = "top",
@@ -100,7 +103,7 @@ function M.register(Registry)
                 and (ctx.cell_max_h - hl_footer_widget:getSize().h)
             or ctx.cell_max_h
 
-        local highlight_widget = BannerText.buildTextField(B_SETT, HL_SETT, random_highlight, highlight_font, hl_wgt_max_h, ctx.cell_max_w, true, true)
+        local highlight_widget = BannerText.buildTextField(B_SETT, HL_SETT, random_highlight, highlight_font, hl_wgt_max_h, ctx.cell_max_w, true, true, pal.text_primary, pal.fill)
         local accent_height = highlight_widget:getSize().h
 
         if HL_SETT.show_accent_line then
