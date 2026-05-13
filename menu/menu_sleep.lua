@@ -13,7 +13,7 @@ local MenuSleep = {}
 function MenuSleep.buildEnableToggleEntry()
     require("l10n").load()
     return {
-        text = _("Awesome sleepscreen (sleep banner)"),
+        text = _("Sleepscreen widgets (sleep banner)"),
         help_text = _("When ON, replaces the sleep-screen banner with the 6×3 grid layout when KOReader uses Banner message mode."),
         checked_func = function()
             return Settings:isPluginEnabled()
@@ -54,7 +54,7 @@ end
 function MenuSleep.buildFallbackCombinedEntry(plugin_inst)
     require("l10n").load()
     return {
-        text = _("Awesome sleepscreen"),
+        text = _("Sleepscreen widgets"),
         separator = true,
         sub_item_table_func = function()
             return {

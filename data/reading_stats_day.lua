@@ -38,7 +38,7 @@ function M.total_seconds_today()
     end)
 
     if not ok_q then
-        logger.warn("awesome_sleepscreen", "reading_stats_day: query failed")
+        logger.warn("sleepscreen_widgets", "reading_stats_day: query failed")
         return nil, "query_failed"
     end
 

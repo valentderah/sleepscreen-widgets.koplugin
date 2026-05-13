@@ -7,10 +7,26 @@ local Config = require("config")
 local GridModel = require("grid.grid_model")
 local Registry = require("banner.widgets.registry")
 
-local SETTINGS_BASENAME = "awesome_sleepscreen.lua"
+local SETTINGS_BASENAME = "sleepscreen_widgets.lua"
+
+--- Dropped widget types: removed from grid on load/save (no migration to another type).
+local REMOVED_WIDGET_TYPES = { sleep_stats = true }
 
 local Settings = {}
 Settings._lua = nil
+
+local function strip_removed_widget_placements(list)
+    if type(list) ~= "table" then
+        return {}
+    end
+    local out = {}
+    for _, p in ipairs(list) do
+        if type(p) == "table" and type(p.type) == "string" and not REMOVED_WIDGET_TYPES[p.type] then
+            table.insert(out, p)
+        end
+    end
+    return out
+end
 
 local function settings_path(dir)
     return dir .. "/" .. SETTINGS_BASENAME
@@ -47,7 +63,7 @@ function Settings:open()
         if raw == nil then
             placements = GridModel.normalizePlacements(Config.DEFAULT_GRID_PLACEMENTS, span_fn)
         else
-            placements = GridModel.parseSaved(raw, span_fn)
+            placements = strip_removed_widget_placements(GridModel.parseSaved(raw, span_fn))
         end
         self._lua:saveSetting("grid", GridModel.wrapSaved(placements))
         self._lua:saveSetting("schema_version", Config.SCHEMA_VERSION)
@@ -87,11 +103,12 @@ end
 
 function Settings:getGridPlacements()
     local raw = self:open():readSetting("grid")
-    return GridModel.parseSaved(raw, grid_default_span)
+    return strip_removed_widget_placements(GridModel.parseSaved(raw, grid_default_span))
 end
 
 function Settings:saveGridPlacements(placements)
     Registry.ensure_registered()
+    placements = strip_removed_widget_placements(placements)
     local norm = GridModel.normalizePlacements(placements, grid_default_span)
     self:open():saveSetting("grid", GridModel.wrapSaved(norm))
     self:flush()
