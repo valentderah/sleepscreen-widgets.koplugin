@@ -1,5 +1,5 @@
-local Font = require("ui/font")
 local Device = require("device")
+local Font = require("ui/font")
 local ProgressWidget = require("ui/widget/progresswidget")
 local Screen = Device.screen
 local TextBoxWidget = require("ui/widget/textboxwidget")
@@ -8,6 +8,7 @@ local VerticalGroup = require("ui/widget/verticalgroup")
 local VerticalSpan = require("ui/widget/verticalspan")
 
 local FrameStyle = require("banner.frame_style")
+local WidgetSpan = require("banner.widget_span")
 local reading_stats_day = require("data.reading_stats_day")
 
 local _ = require("l10n").gettext
@@ -36,11 +37,12 @@ function M.register(Registry)
         end
 
         local col = VerticalGroup:new{ align = "center" }
+        table.insert(col, VerticalSpan:new{ width = Screen:scaleBySize(4) })
         local header = type(params.label) == "string" and params.label ~= "" and params.label
             or _("READING · TODAY")
         table.insert(col, TextBoxWidget:new{
             text = header,
-            face = Font:getFace("cfont", 12),
+            face = Font:getFace("cfont", WidgetSpan.scaled_font_size(12, ctx)),
             width = max_w,
             fgcolor = pal.text_secondary,
             bold = false,
@@ -50,14 +52,14 @@ function M.register(Registry)
 
         table.insert(col, TextWidget:new{
             text = tostring(minutes),
-            face = Font:getFace("cfont", 26),
+            face = Font:getFace("cfont", WidgetSpan.scaled_font_size(26, ctx)),
             bold = true,
             fgcolor = pal.text_primary,
             padding = 0,
         })
         table.insert(col, TextWidget:new{
             text = _("MIN"),
-            face = Font:getFace("cfont", 12),
+            face = Font:getFace("cfont", WidgetSpan.scaled_font_size(12, ctx)),
             fgcolor = pal.text_secondary,
             padding = 0,
         })

@@ -152,6 +152,24 @@ msgstr "开启后，当 KOReader 使用 Banner 消息模式时，用 6×3 网格
 msgid "Sleep banner grid (6×3)"
 msgstr "睡眠横幅网格（6×3）"
 
+msgid "Grid horizontal inset from screen (px)"
+msgstr "网格距屏幕左右留白（像素）"
+
+msgid "Left/right margin between the screen border and the 6×3 grid; scaled for DPI. When unset, the combined \"legacy\" inset value is used for this axis."
+msgstr "屏幕左右边与 6×3 网格之间的边距；按 DPI 缩放。若未单独设置该轴，则使用合并后的旧版单边距值。"
+
+msgid "Grid horizontal inset (px)"
+msgstr "网格横向边距（像素）"
+
+msgid "Grid vertical inset from screen (px)"
+msgstr "网格距屏幕上/下留白（像素）"
+
+msgid "Top/bottom margin between the screen border and the 6×3 grid; scaled for DPI. When unset, the combined \"legacy\" inset value is used for this axis."
+msgstr "屏幕上/下边缘与 6×3 网格之间的边距；按 DPI 缩放。若未单独设置该轴，则使用合并后的旧版单边距值。"
+
+msgid "Grid vertical inset (px)"
+msgstr "网格纵向边距（像素）"
+
 msgid "Default grid / widget gap (px)"
 msgstr "默认网格/小组件间距（像素）"
 
@@ -203,5 +221,5 @@ msgstr "此格子属于锚定在第 %d 行、第 %d 列的小组件。"
 msgid "Edit…"
 msgstr "编辑…"
 
-msgid "Row %d"
-msgstr "第 %d 行"
+msgid "Row %d (%s)"
+msgstr "第 %d 行（%s）"

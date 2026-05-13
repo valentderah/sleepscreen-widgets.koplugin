@@ -81,7 +81,9 @@ function BannerText.parseFooterText(text, index, Sidecar)
     return text
 end
 
-function BannerText.buildTextField(B_SETT, HL_SETT, text, font_face, max_height, max_wid, ignoreLineBreaks, isHighlight, text_color, bgcolor_override)
+---@param opts table|nil optional: `force_full_width` — always use TextBoxWidget at `max_wid` (short lines still fill width).
+function BannerText.buildTextField(B_SETT, HL_SETT, text, font_face, max_height, max_wid, ignoreLineBreaks, isHighlight, text_color, bgcolor_override, opts)
+    opts = opts or {}
     local Bb = require("ffi/blitbuffer")
     if font_face == nil then
         local Font = require("ui/font")
@@ -112,16 +114,8 @@ function BannerText.buildTextField(B_SETT, HL_SETT, text, font_face, max_height,
     end
     local segments = ignoreLineBreaks and { text } or util.splitToArray(text, "\n")
     for _, item in ipairs(segments) do
-        local wgt = TextWidget:new{
-            padding = 0,
-            text = item,
-            face = font_face,
-            alignment = "left",
-            fgcolor = fg,
-            bgcolor = bg,
-        }
-        if wgt:getSize().w > max_wid then
-            wgt:free()
+        local wgt
+        if opts.force_full_width then
             wgt = TextBoxWidget:new{
                 text = item,
                 face = font_face,
@@ -134,6 +128,30 @@ function BannerText.buildTextField(B_SETT, HL_SETT, text, font_face, max_height,
                 fgcolor = fg,
                 bgcolor = bg,
             }
+        else
+            wgt = TextWidget:new{
+                padding = 0,
+                text = item,
+                face = font_face,
+                alignment = "left",
+                fgcolor = fg,
+                bgcolor = bg,
+            }
+            if wgt:getSize().w > max_wid then
+                wgt:free()
+                wgt = TextBoxWidget:new{
+                    text = item,
+                    face = font_face,
+                    width = max_wid,
+                    alignment = "left",
+                    height = max_height,
+                    height_adjust = true,
+                    height_overflow_show_ellipsis = true,
+                    justified = isHighlight and type(HL_SETT) == "table" and HL_SETT.justify,
+                    fgcolor = fg,
+                    bgcolor = bg,
+                }
+            end
         end
         table.insert(wgt_grp, wgt)
     end

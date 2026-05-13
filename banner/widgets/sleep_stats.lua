@@ -3,6 +3,7 @@ local VerticalSpan = require("ui/widget/verticalspan")
 
 local BannerText = require("banner.text")
 local FrameStyle = require("banner.frame_style")
+local WidgetSpan = require("banner.widget_span")
 
 local M = {}
 
@@ -10,8 +11,9 @@ function M.register(Registry)
     Registry.register("sleep_stats", function(params, ctx)
         local B_SETT = ctx.B_SETT
         local HL_SETT = ctx.HL_SETT
-        local face = Font:getFace(B_SETT.stats_fontFace, B_SETT.stats_fontSize)
-            or Font:getFace("cfont", 17)
+        local base = B_SETT.stats_fontSize or 17
+        local face = Font:getFace(B_SETT.stats_fontFace, WidgetSpan.scaled_font_size(base, ctx))
+            or Font:getFace("cfont", WidgetSpan.scaled_font_size(17, ctx))
         local text
         if params.mode == "template" and type(params.pattern) == "string" and params.pattern:match("%S") then
             text = BannerText.expand_string(ctx.ui_inst, params.pattern, ctx.last_file) or ""

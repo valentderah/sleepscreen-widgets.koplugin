@@ -7,6 +7,7 @@ local VerticalGroup = require("ui/widget/verticalgroup")
 local VerticalSpan = require("ui/widget/verticalspan")
 
 local FrameStyle = require("banner.frame_style")
+local WidgetSpan = require("banner.widget_span")
 
 local M = {}
 
@@ -22,10 +23,9 @@ function M.register(Registry)
         local month_size = params.month_size or 14
 
         local col = VerticalGroup:new{ align = "center" }
-        -- Decorative "rings" — minimal placeholder (two dots)
         table.insert(col, TextWidget:new{
             text = "·  ·",
-            face = Font:getFace("cfont", 10),
+            face = Font:getFace("cfont", WidgetSpan.scaled_font_size(10, ctx)),
             fgcolor = pal.text_secondary,
             padding = 0,
             bgcolor = pal.fill,
@@ -33,7 +33,7 @@ function M.register(Registry)
         table.insert(col, VerticalSpan:new{ width = Screen:scaleBySize(2) })
         table.insert(col, TextBoxWidget:new{
             text = month_str,
-            face = Font:getFace("cfont", month_size),
+            face = Font:getFace("cfont", WidgetSpan.scaled_font_size(month_size, ctx)),
             width = max_w,
             fgcolor = pal.text_secondary,
             bgcolor = pal.fill,
@@ -43,7 +43,7 @@ function M.register(Registry)
         table.insert(col, VerticalSpan:new{ width = Screen:scaleBySize(4) })
         table.insert(col, TextWidget:new{
             text = tostring(day_num),
-            face = Font:getFace("cfont", day_size),
+            face = Font:getFace("cfont", WidgetSpan.scaled_font_size(day_size, ctx)),
             bold = true,
             fgcolor = pal.text_primary,
             padding = 0,

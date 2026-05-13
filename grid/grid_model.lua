@@ -3,9 +3,6 @@ local GridModel = {}
 
 GridModel.GRID_COLS = 3
 GridModel.GRID_ROWS = 6
-GridModel.SLOT_COUNT = GridModel.GRID_COLS * GridModel.GRID_ROWS
-GridModel.LEGACY_STACK_COUNT = 9
-GridModel.ZONE_COUNT = GridModel.SLOT_COUNT
 
 function GridModel.normalizeWidget(block)
     if type(block) ~= "table" or type(block.type) ~= "string" or block.type == "" then
@@ -17,8 +14,6 @@ function GridModel.normalizeWidget(block)
     end
     return { type = block.type, params = params }
 end
-
-GridModel.normalizeBlock = GridModel.normalizeWidget
 
 function GridModel.maxSpanForCol(col)
     col = tonumber(col) or 0
@@ -114,45 +109,6 @@ function GridModel.normalizePlacements(raw_list, default_fn)
     return out
 end
 
-function GridModel.isLegacyStackGrid(raw)
-    if type(raw) ~= "table" or raw.format_version == 2 then
-        return false
-    end
-    if #raw ~= GridModel.LEGACY_STACK_COUNT then
-        return false
-    end
-    for i = 1, GridModel.LEGACY_STACK_COUNT do
-        if type(raw[i]) ~= "table" then
-            return false
-        end
-    end
-    return true
-end
-
-function GridModel.migrateLegacyStackGrid(raw, default_fn)
-    local list = {}
-    for i = 1, GridModel.LEGACY_STACK_COUNT do
-        local stack = raw[i]
-        if type(stack) == "table" then
-            for _, b in ipairs(stack) do
-                local w = GridModel.normalizeWidget(b)
-                if w then
-                    local row = math.floor((i - 1) / 3) + 1
-                    local col = (i - 1) % 3 + 1
-                    table.insert(list, {
-                        type = w.type,
-                        params = w.params,
-                        row = row,
-                        col = col,
-                    })
-                    break
-                end
-            end
-        end
-    end
-    return GridModel.normalizePlacements(list, default_fn)
-end
-
 function GridModel.wrapSaved(placements)
     return { format_version = 2, placements = placements or {} }
 end
@@ -165,9 +121,6 @@ function GridModel.parseSaved(blob, default_fn)
     default_fn = default_fn or function() return 1 end
     if type(blob) == "table" and blob.format_version == 2 and type(blob.placements) == "table" then
         return GridModel.normalizePlacements(blob.placements, default_fn)
-    end
-    if GridModel.isLegacyStackGrid(blob) then
-        return GridModel.migrateLegacyStackGrid(blob, default_fn)
     end
     return {}
 end

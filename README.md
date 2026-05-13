@@ -4,6 +4,8 @@ English | [Русский](README.ru.md)
 
 A [KOReader](https://github.com/koreader/koreader) plugin that replaces the default **sleep-screen banner** with a configurable **6×3 grid** of **widgets**—rounded **cards** in a Frame-like style. Each cell holds at most one widget; widgets can span **1–3 columns**. Included: clocks, templates, quotes from the book, sleep stats, date/time header, battery, current book, a calendar tile, and daily reading time.
 
+![Sleep screen with the 6×3 widget grid over a wallpaper background](assets/screenshot-sleep-grid.png)
+
 ## Features
 
 - **6×3 grid** — Up to 18 slots; **horizontal span** 1–3 columns; row/column gutters configurable in banner appearance.
@@ -21,9 +23,11 @@ A [KOReader](https://github.com/koreader/koreader) plugin that replaces the defa
 
 The plugin grid appears only when **all** of the following are true:
 
-1. **Sleep screen message** is enabled.
-2. Message container mode is **Banner**, not full-screen message only.
-3. **Screensaver type** is cover, **random image**, **document cover**, or **disabled** (so the standard banner region remains).
+1. **Sleep screen message** is enabled — in the reader (or file manager) open **Settings** → **Screen** → **Sleep screen**, then **Sleep screen message**, and turn **ON** **Add custom message to sleep screen**. (The Awesome Sleepscreen menu toggle only enables the plugin; it does **not** change these system settings.)
+2. Message container mode is **Banner** — still under **Sleep screen message**, open **Container and position** and choose **Banner** (not **Box**).
+3. **Screensaver type** is cover, **random image**, **document cover**, or **disabled** (so the standard banner region remains) — set under **Sleep screen** → **Wallpaper**.
+
+If any of the above is wrong, KOReader shows its normal sleep message and the plugin does not replace it with the grid.
 
 ## Installation
 

@@ -76,13 +76,15 @@ function M.register(Registry)
         local hl_footer_widget
         if hl_footer_enabled then
             local hyphen_wid = BannerText.buildTextField(B_SETT, HL_SETT, "— ", footer_font, ctx.cell_max_h, ctx.cell_max_w, true, false, footer_color, pal.fill)
+            local hyphen_tw = hyphen_wid:getSize().w
+            local footer_w_budget = math.max(40, (ctx.cell_max_w or 100) - hyphen_tw)
             hl_footer_widget = BannerText.buildTextField(
                 B_SETT,
                 HL_SETT,
                 BannerText.parseFooterText(footer_tpl, random_highlight_index, Sidecar),
                 footer_font,
                 ctx.cell_max_h,
-                ctx.cell_max_w - hyphen_wid:getSize().w,
+                footer_w_budget,
                 false,
                 false,
                 footer_color,
@@ -103,7 +105,23 @@ function M.register(Registry)
                 and (ctx.cell_max_h - hl_footer_widget:getSize().h)
             or ctx.cell_max_h
 
-        local highlight_widget = BannerText.buildTextField(B_SETT, HL_SETT, random_highlight, highlight_font, hl_wgt_max_h, ctx.cell_max_w, true, true, pal.text_primary, pal.fill)
+        local accent_w = HL_SETT.show_accent_line and Screen:scaleBySize(1) or 0
+        local accent_gap = HL_SETT.show_accent_line and Size.padding.large or 0
+        local quote_w = math.max(40, (ctx.cell_max_w or 100) - accent_w - accent_gap)
+
+        local highlight_widget = BannerText.buildTextField(
+            B_SETT,
+            HL_SETT,
+            random_highlight,
+            highlight_font,
+            hl_wgt_max_h,
+            quote_w,
+            true,
+            true,
+            pal.text_primary,
+            pal.fill,
+            { force_full_width = true }
+        )
         local accent_height = highlight_widget:getSize().h
 
         if HL_SETT.show_accent_line then
