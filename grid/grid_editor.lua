@@ -136,8 +136,6 @@ end
 local function default_widget(widget_type)
     if widget_type == "template" then
         return { type = "template", params = { pattern = "%T", role = "title" } }
-    elseif widget_type == "sleep_stats" then
-        return { type = "sleep_stats", params = { mode = "stock", role = "stats" } }
     elseif widget_type == "highlight" then
         return { type = "highlight", params = {} }
     elseif widget_type == "clock" then
@@ -209,7 +207,6 @@ function GridEditor.addWidgetMenu(row, col)
     end
     return {
         item_with_width(_("Text template"), "template"),
-        item_with_width(_("Sleep stats line"), "sleep_stats"),
         item_with_width(_("Random highlight"), "highlight"),
         item_with_width(_("Clock"), "clock"),
         item_with_width(_("Analog clock"), "clock_analog"),
@@ -318,80 +315,6 @@ function GridEditor.widgetMenu(row, col)
                                 local pl2 = Settings:getGridPlacements()
                                 local w2 = pl2[anchor_index(pl2, row, col)]
                                 if w2 then
-                                    w2.params.pattern = dlg:getInputText()
-                                    Settings:saveGridPlacements(pl2)
-                                end
-                                UIManager:close(dlg)
-                                pop_menu_one_level(touchmenu)
-                            end,
-                        },
-                    }},
-                }
-                UIManager:show(dlg)
-                dlg:onShowKeyboard()
-            end,
-        })
-    elseif widget.type == "sleep_stats" then
-        table.insert(items, {
-            text = _("Mode: use KOReader stock line"),
-            radio = true,
-            keep_menu_open = true,
-            checked_func = function()
-                local pl = Settings:getGridPlacements()
-                local w = pl[anchor_index(pl, row, col)]
-                return w and w.params.mode ~= "template"
-            end,
-            callback = function(touchmenu)
-                with_anchor(function(w, pl)
-                    w.params.mode = "stock"
-                    w.params.pattern = nil
-                    Settings:saveGridPlacements(pl)
-                end)
-                pop_menu_one_level(touchmenu)
-            end,
-        })
-        table.insert(items, {
-            text = _("Mode: custom template"),
-            radio = true,
-            keep_menu_open = true,
-            checked_func = function()
-                local pl = Settings:getGridPlacements()
-                local w = pl[anchor_index(pl, row, col)]
-                return w and w.params.mode == "template"
-            end,
-            callback = function(touchmenu)
-                with_anchor(function(w, pl)
-                    w.params.mode = "template"
-                    Settings:saveGridPlacements(pl)
-                end)
-                pop_menu_one_level(touchmenu)
-            end,
-        })
-        table.insert(items, {
-            text = _("Edit stats template…"),
-            keep_menu_open = true,
-            callback = function(touchmenu)
-                local pl = Settings:getGridPlacements()
-                local w = pl[anchor_index(pl, row, col)]
-                local dlg
-                dlg = InputDialog:new{
-                    title = _("Stats template"),
-                    input = (w and w.params.pattern) or "",
-                    buttons = {{
-                        {
-                            text = _("Cancel"),
-                            callback = function()
-                                UIManager:close(dlg)
-                            end,
-                        },
-                        {
-                            text = _("Save"),
-                            is_enter_default = true,
-                            callback = function()
-                                local pl2 = Settings:getGridPlacements()
-                                local w2 = pl2[anchor_index(pl2, row, col)]
-                                if w2 then
-                                    w2.params.mode = "template"
                                     w2.params.pattern = dlg:getInputText()
                                     Settings:saveGridPlacements(pl2)
                                 end

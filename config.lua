@@ -1,8 +1,8 @@
---[[ Defaults for awesome-sleepscreen plugin. ]]
+--[[ Defaults for sleepscreen_widgets plugin. ]]
 local Config = {}
 
 --- Bump when persisted settings shape changes; `Settings:open` re-writes `grid` from v2 or clears to empty.
-Config.SCHEMA_VERSION = 7
+Config.SCHEMA_VERSION = 8
 
 Config.GRID_EDGE_INSET_MAX = 512
 

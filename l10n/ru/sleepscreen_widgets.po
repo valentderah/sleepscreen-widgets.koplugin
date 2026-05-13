@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-msgid "Awesome sleepscreen"
-msgstr "Awesome Sleepscreen"
+msgid "Sleepscreen widgets"
+msgstr "Sleepscreen widgets"
 
-msgid "Awesome sleepscreen (sleep banner)"
-msgstr "Awesome Sleepscreen (баннер сна)"
+msgid "Sleepscreen widgets (sleep banner)"
+msgstr "Sleepscreen widgets (баннер сна)"
 
 msgid "3×3 sleep banner grid with Frame-style widget cards: clocks, templates, highlights, date/battery/book/calendar, and reading time."
 msgstr "Сетка баннера сна 3×3 с карточками виджетов в стиле Frame: часы, шаблоны, подсветки, дата/батарея/книга/календарь и время чтения."

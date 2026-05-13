@@ -21,7 +21,7 @@ function Registry.build(block, ctx)
     local id = block.type
     local fn = Registry._types[id]
     if not fn then
-        logger.warn("awesome_sleepscreen", "unknown widget type: " .. tostring(id))
+        logger.warn("sleepscreen_widgets", "unknown widget type: " .. tostring(id))
         return nil
     end
     return fn(block.params or {}, ctx)
@@ -32,7 +32,6 @@ function Registry.ensure_registered()
     Registry._registered = true
     Registry._meta = {}
     require("banner.widgets.template").register(Registry)
-    require("banner.widgets.sleep_stats").register(Registry)
     require("banner.widgets.highlight").register(Registry)
     require("banner.widgets.clock").register(Registry)
     require("banner.widgets.analog_clock").register(Registry)

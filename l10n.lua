@@ -1,4 +1,4 @@
---[[ Localization for awesome-sleepscreen plugin (en msgids + ru + zh_CN .po). ]]
+--[[ Localization for sleepscreen_widgets plugin (en msgids + ru + zh_CN .po). ]]
 local logger = require("logger")
 local gettext = require("gettext")
 
@@ -69,13 +69,13 @@ function M.load()
     local lang = G_reader_settings and G_reader_settings:readSetting("language") or "en"
     local sub = lang_to_po_subdir(lang)
     if not sub then return end
-    local path = plugin_root .. "/l10n/" .. sub .. "/awesome_sleepscreen.po"
+    local path = plugin_root .. "/l10n/" .. sub .. "/sleepscreen_widgets.po"
     local map = parse_po(path)
     if map and next(map) then
         translations = map
         local n = 0
         for _ in pairs(map) do n = n + 1 end
-        logger.info("awesome_sleepscreen l10n: loaded " .. path .. " (" .. n .. " strings)")
+        logger.info("sleepscreen_widgets l10n: loaded " .. path .. " (" .. n .. " strings)")
     end
 end
 

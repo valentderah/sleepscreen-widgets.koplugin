@@ -111,12 +111,12 @@ local M = {}
 
 function M.install()
     local UM = require("ui/uimanager")
-    if UM._sleepscreen_banner_show_hook then
+    if UM._sleepscreen_widgets_banner_show_hook then
         return
     end
     og_ui_man_show = UM.show
     UM.show = patched_show
-    UM._sleepscreen_banner_show_hook = true
+    UM._sleepscreen_widgets_banner_show_hook = true
 end
 
 return M

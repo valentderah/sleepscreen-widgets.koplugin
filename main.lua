@@ -1,11 +1,11 @@
 local WidgetContainer = require("ui/widget/container/widgetcontainer")
 
-local AwesomeSleepscreen = WidgetContainer:extend{
-    name = "awesome_sleepscreen",
+local SleepscreenWidgets = WidgetContainer:extend{
+    name = "sleepscreen_widgets",
     is_doc_only = false,
 }
 
-function AwesomeSleepscreen:init()
+function SleepscreenWidgets:init()
     require("l10n").load()
     local MenuHook = require("menu.menu_hook")
     local Banner = require("banner")
@@ -13,4 +13,4 @@ function AwesomeSleepscreen:init()
     Banner.install()
 end
 
-return AwesomeSleepscreen
+return SleepscreenWidgets
