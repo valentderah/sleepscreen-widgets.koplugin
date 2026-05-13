@@ -6,6 +6,7 @@ local VerticalGroup = require("ui/widget/verticalgroup")
 local VerticalSpan = require("ui/widget/verticalspan")
 
 local FrameStyle = require("banner.frame_style")
+local WidgetSpan = require("banner.widget_span")
 
 local M = {}
 
@@ -21,6 +22,10 @@ function M.register(Registry)
         local time_text = os.date(time_fmt)
         local date_size = tonumber(params.date_size) or 14
         local time_size = tonumber(params.time_size) or 28
+        if WidgetSpan.col_span(ctx) >= 2 then
+            date_size = math.floor(date_size * 1.08 + 0.5)
+            time_size = math.floor(time_size * 1.08 + 0.5)
+        end
 
         local col = VerticalGroup:new{ align = "center" }
         table.insert(col, TextBoxWidget:new{

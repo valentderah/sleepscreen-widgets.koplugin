@@ -5,6 +5,7 @@ local UIManager = require("ui/uimanager")
 
 local GridModel = require("grid.grid_model")
 local Registry = require("banner.widgets.registry")
+local RowMenuHint = require("grid.row_menu_hint")
 local Settings = require("settings")
 
 local _ = require("l10n").gettext
@@ -66,7 +67,7 @@ local function cover_info(placements, row, col)
     return nil, false
 end
 
-local function try_add_widget(row, col, proto, touchmenu)
+local function try_add_widget(row, col, proto, touchmenu, levels_up)
     local list = Settings:getGridPlacements()
     local span = GridModel.resolveColSpan(proto.type, proto.params, row, col, default_fn)
     if not region_free(list, row, col, span) then
@@ -83,7 +84,10 @@ local function try_add_widget(row, col, proto, touchmenu)
         col = col,
     })
     Settings:saveGridPlacements(list)
-    pop_menu_one_level(touchmenu)
+    local n = tonumber(levels_up) or 1
+    for _ = 1, n do
+        pop_menu_one_level(touchmenu)
+    end
 end
 
 local function try_set_span(idx, span_val, touchmenu)
@@ -154,27 +158,66 @@ local function default_widget(widget_type)
     return { type = widget_type, params = {} }
 end
 
+local function proto_with_span(widget_type, span_val)
+    local p = default_widget(widget_type)
+    if span_val <= 1 then
+        p.params.col_span = nil
+    else
+        p.params.col_span = span_val
+    end
+    return p
+end
+
 function GridEditor.addWidgetMenu(row, col)
-    local function item(label, wtype)
+    local max_col_span = GridModel.maxSpanForCol(col)
+    local function span_label(s)
+        if s == 1 then
+            return _("1 column")
+        elseif s == 2 then
+            return _("2 columns")
+        end
+        return _("3 columns")
+    end
+    local function item_with_width(label, wtype)
+        if max_col_span <= 1 then
+            return {
+                text = label,
+                keep_menu_open = true,
+                callback = function(touchmenu)
+                    try_add_widget(row, col, proto_with_span(wtype, 1), touchmenu, 1)
+                end,
+            }
+        end
         return {
             text = label,
             keep_menu_open = true,
-            callback = function(touchmenu)
-                try_add_widget(row, col, default_widget(wtype), touchmenu)
+            sub_item_table_func = function()
+                local sub = {}
+                for s = 1, max_col_span do
+                    local span = s
+                    table.insert(sub, {
+                        text = span_label(s),
+                        keep_menu_open = true,
+                        callback = function(touchmenu)
+                            try_add_widget(row, col, proto_with_span(wtype, span), touchmenu, 2)
+                        end,
+                    })
+                end
+                return sub
             end,
         }
     end
     return {
-        item(_("Text template"), "template"),
-        item(_("Sleep stats line"), "sleep_stats"),
-        item(_("Random highlight"), "highlight"),
-        item(_("Clock"), "clock"),
-        item(_("Analog clock"), "clock_analog"),
-        item(_("Date & time header"), "header_datetime"),
-        item(_("Battery status"), "battery_status"),
-        item(_("Current book"), "reading_now"),
-        item(_("Calendar tile"), "calendar_tile"),
-        item(_("Reading time today"), "today_reading"),
+        item_with_width(_("Text template"), "template"),
+        item_with_width(_("Sleep stats line"), "sleep_stats"),
+        item_with_width(_("Random highlight"), "highlight"),
+        item_with_width(_("Clock"), "clock"),
+        item_with_width(_("Analog clock"), "clock_analog"),
+        item_with_width(_("Date & time header"), "header_datetime"),
+        item_with_width(_("Battery status"), "battery_status"),
+        item_with_width(_("Current book"), "reading_now"),
+        item_with_width(_("Calendar tile"), "calendar_tile"),
+        item_with_width(_("Reading time today"), "today_reading"),
     }
 end
 
@@ -606,9 +649,11 @@ end
 
 function GridEditor.gridZonesMenu()
     local items = {}
+    local placements = Settings:getGridPlacements()
     for row = 1, GridModel.GRID_ROWS do
+        local hint = RowMenuHint.row_hint(placements, row, default_fn)
         table.insert(items, {
-            text = string.format(_("Row %d"), row),
+            text = string.format(_("Row %d (%s)"), row, hint),
             sub_item_table_func = function()
                 return GridEditor.rowMenu(row)
             end,

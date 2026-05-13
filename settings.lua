@@ -7,41 +7,13 @@ local Config = require("config")
 local GridModel = require("grid.grid_model")
 local Registry = require("banner.widgets.registry")
 
-local NEW_SETTINGS_BASENAME = "awesome_sleepscreen.lua"
-local LEGACY_SETTINGS_BASENAMES = {
-    "awesome_lockscreen.lua",
-    "custom_sleepscreen.lua",
-}
+local SETTINGS_BASENAME = "awesome_sleepscreen.lua"
 
 local Settings = {}
 Settings._lua = nil
 
-local function resolve_settings_path(dir)
-    local new_path = dir .. "/" .. NEW_SETTINGS_BASENAME
-    local ok_lfs, lfs = pcall(require, "libs/libkoreader-lfs")
-    if not (ok_lfs and lfs and lfs.attributes) then
-        return new_path
-    end
-    if lfs.attributes(new_path, "mode") == "file" then
-        return new_path
-    end
-    for _, base in ipairs(LEGACY_SETTINGS_BASENAMES) do
-        local leg = dir .. "/" .. base
-        if lfs.attributes(leg, "mode") == "file" then
-            local renamed = false
-            if lfs.rename then
-                renamed = select(1, pcall(lfs.rename, leg, new_path))
-            end
-            if not renamed then
-                pcall(os.rename, leg, new_path)
-            end
-            if lfs.attributes(new_path, "mode") == "file" then
-                return new_path
-            end
-            return leg
-        end
-    end
-    return new_path
+local function settings_path(dir)
+    return dir .. "/" .. SETTINGS_BASENAME
 end
 
 function Settings:getSettingsDir()
@@ -50,39 +22,39 @@ end
 
 function Settings:open()
     if self._lua then return self._lua end
-    local path = resolve_settings_path(self:getSettingsDir())
+    local path = settings_path(self:getSettingsDir())
     self._lua = LuaSettings:open(path)
+
+    local function span_fn(t)
+        return Registry.default_col_span(t)
+    end
+
+    local function seed_default_grid_if_absent(lua)
+        if lua:readSetting("grid") ~= nil then
+            return
+        end
+        Registry.ensure_registered()
+        local placements = GridModel.normalizePlacements(Config.DEFAULT_GRID_PLACEMENTS, span_fn)
+        lua:saveSetting("grid", GridModel.wrapSaved(placements))
+        lua:flush()
+    end
 
     local sv = self._lua:readSetting("schema_version") or 0
     if sv < Config.SCHEMA_VERSION then
-        if self._lua:readSetting("grid") == nil then
-            self._lua:saveSetting("grid", GridModel.emptySaved())
+        Registry.ensure_registered()
+        local raw = self._lua:readSetting("grid")
+        local placements
+        if raw == nil then
+            placements = GridModel.normalizePlacements(Config.DEFAULT_GRID_PLACEMENTS, span_fn)
+        else
+            placements = GridModel.parseSaved(raw, span_fn)
         end
-        if sv < (Config.SCHEMA_GRID_PLACEMENTS_AT or 6) then
-            Registry.ensure_registered()
-            local raw = self._lua:readSetting("grid")
-            local placements = GridModel.parseSaved(raw, function(t)
-                return Registry.default_col_span(t)
-            end)
-            self._lua:saveSetting("grid", GridModel.wrapSaved(placements))
-        end
-        if sv < Config.SCHEMA_LOCK_KEYS_REMOVED_AT then
-            for _, k in ipairs({
-                "lock_enabled",
-                "lock_pin",
-                "lock_dim_level",
-                "lock_warn_seen",
-            }) do
-                if self._lua.delSetting then
-                    pcall(function()
-                        self._lua:delSetting(k)
-                    end)
-                end
-            end
-        end
+        self._lua:saveSetting("grid", GridModel.wrapSaved(placements))
         self._lua:saveSetting("schema_version", Config.SCHEMA_VERSION)
         self._lua:flush()
     end
+
+    seed_default_grid_if_absent(self._lua)
 
     return self._lua
 end
@@ -123,16 +95,6 @@ function Settings:saveGridPlacements(placements)
     local norm = GridModel.normalizePlacements(placements, grid_default_span)
     self:open():saveSetting("grid", GridModel.wrapSaved(norm))
     self:flush()
-end
-
----@deprecated use getGridPlacements
-function Settings:getGridZones()
-    return self:getGridPlacements()
-end
-
----@deprecated use saveGridPlacements
-function Settings:saveGridZones(zones)
-    self:saveGridPlacements(zones)
 end
 
 return Settings

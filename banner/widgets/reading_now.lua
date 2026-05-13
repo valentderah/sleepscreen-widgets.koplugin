@@ -10,10 +10,27 @@ local VerticalGroup = require("ui/widget/verticalgroup")
 local VerticalSpan = require("ui/widget/verticalspan")
 
 local FrameStyle = require("banner.frame_style")
+local WidgetSpan = require("banner.widget_span")
 
 local _ = require("l10n").gettext
 
 local M = {}
+
+local function pad_vertical_to_max(group, max_h)
+    local mh = tonumber(max_h) or 0
+    if mh <= 0 then
+        return group
+    end
+    local h = group:getSize().h
+    local slack = mh - h
+    if slack > 0 then
+        table.insert(group, VerticalSpan:new{ width = slack })
+        if group.resetLayout then
+            group:resetLayout()
+        end
+    end
+    return group
+end
 
 function M.register(Registry)
     Registry.register("reading_now", function(_params, ctx)
@@ -22,13 +39,15 @@ function M.register(Registry)
         local ui = ctx.ui_inst
 
         if not ui or not ui.document then
-            return TextBoxWidget:new{
+            local empty = VerticalGroup:new{ align = "left" }
+            table.insert(empty, TextBoxWidget:new{
                 text = _("No book open"),
-                face = Font:getFace("cfont", 14),
+                face = Font:getFace("cfont", WidgetSpan.scaled_font_size(14, ctx)),
                 width = max_w,
                 fgcolor = pal.text_secondary,
                 alignment = "center",
-            }
+            })
+            return pad_vertical_to_max(empty, ctx.cell_max_h)
         end
 
         local doc_props = ui.doc_props or {}
@@ -63,14 +82,14 @@ function M.register(Registry)
 
         local pct_widget = TextWidget:new{
             text = pct_txt,
-            face = Font:getFace("cfont", 14),
+            face = Font:getFace("cfont", WidgetSpan.scaled_font_size(14, ctx)),
             fgcolor = pal.text_secondary,
             padding = 0,
         }
         local title_width = math.max(40, max_w - pct_widget:getSize().w - Screen:scaleBySize(4))
         local title_box = TextBoxWidget:new{
             text = title,
-            face = Font:getFace("cfont", 16),
+            face = Font:getFace("cfont", WidgetSpan.scaled_font_size(16, ctx)),
             width = title_width,
             fgcolor = pal.text_primary,
             bold = true,
@@ -86,25 +105,27 @@ function M.register(Registry)
             table.insert(col, VerticalSpan:new{ width = Screen:scaleBySize(2) })
             table.insert(col, TextBoxWidget:new{
                 text = author,
-                face = Font:getFace("cfont", 13),
+                face = Font:getFace("cfont", WidgetSpan.scaled_font_size(13, ctx)),
                 width = max_w,
                 fgcolor = pal.text_secondary,
             })
         end
 
         table.insert(col, VerticalSpan:new{ width = Screen:scaleBySize(6) })
+        local prog_h = Screen:scaleBySize(14)
+        local prog_radius = math.max(Screen:scaleBySize(4), math.floor(prog_h / 3))
         table.insert(col, ProgressWidget:new{
             width = max_w,
-            height = Screen:scaleBySize(10),
+            height = prog_h,
             percentage = pct,
             margin_v = 0,
             margin_h = 0,
-            radius = Screen:scaleBySize(4),
+            radius = prog_radius,
             bordersize = 0,
             bgcolor = pal.progress_track,
             fillcolor = pal.progress_fill,
         })
-        return col
+        return pad_vertical_to_max(col, ctx.cell_max_h)
     end)
 end
 

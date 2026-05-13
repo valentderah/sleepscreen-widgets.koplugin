@@ -1,30 +1,49 @@
---[[ Defaults for awesome-sleepscreen plugin (no preset migrations). ]]
+--[[ Defaults for awesome-sleepscreen plugin. ]]
 local Config = {}
 
-Config.SCHEMA_VERSION = 6
--- `lock_*` settings were removed at schema revision 5 (PIN / wake lock feature dropped).
-Config.SCHEMA_LOCK_KEYS_REMOVED_AT = 5
--- Grid layout migrated from 9 stacked zones to 6×3 placements at revision 6.
-Config.SCHEMA_GRID_PLACEMENTS_AT = 6
+--- Bump when persisted settings shape changes; `Settings:open` re-writes `grid` from v2 or clears to empty.
+Config.SCHEMA_VERSION = 7
+
+Config.GRID_EDGE_INSET_MAX = 512
+
+--- Composer geometry (screen px before scale where noted; see also DEFAULT_BANNER).
+Config.GRID_LAYOUT = {
+    --- Minimum inner width/height used for slot math after edge insets.
+    inner_min_px = 30,
+    --- Minimum square side / span≥2 content box (after card padding).
+    cell_content_min_px = 20,
+    --- zone_index encoding: row * factor + anchor_col (see grid_editor if changed).
+    zone_tag_row_multiplier = 10,
+}
+
+--- Clamps for Banner appearance menu (logical px unless noted).
+Config.UI_LIMITS = {
+    widget_radius_px = { max = 48 },
+    widget_padding_px = { max = 32 },
+    widget_gap_px = { max = 24 },
+}
+
+--- Initial grid when `grid` is absent from settings (first open). Grid is 3 cols × 6 rows (see GridModel).
+Config.DEFAULT_GRID_PLACEMENTS = {
+    { type = "header_datetime", params = {}, row = 1, col = 1 },
+    { type = "reading_now", params = { col_span = 3 }, row = 2, col = 1 },
+    { type = "today_reading", params = { daily_goal_minutes = 60 }, row = 3, col = 1 },
+    { type = "battery_status", params = {}, row = 3, col = 2 },
+    { type = "calendar_tile", params = {}, row = 3, col = 3 },
+    { type = "highlight", params = { col_span = 3 }, row = 4, col = 1 },
+}
 
 Config.DEFAULT_BANNER = {
     title_fontFace = "cfont",
     title_fontSize = 30,
     stats_fontFace = "cfont",
     stats_fontSize = 17,
-    border_size = 1,
-    border_color = 0,
     background = 0,
-    margin = 10,
-    padding = 15,
-    max_height = 95,
-    max_width_hl_off = 40,
-    max_width_hl_on = 60,
     widget_radius = 12,
     widget_padding = 8,
     widget_gap = 6,
-    grid_gutter_x = nil,
-    grid_gutter_y = nil,
+    grid_edge_margin_x = 100,
+    grid_edge_margin_y = 100,
 }
 
 Config.DEFAULT_HIGHLIGHT = {

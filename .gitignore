@@ -12,6 +12,7 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # Editors / IDE
+.cursor/
 .idea/
 *.swp
 *.swo
