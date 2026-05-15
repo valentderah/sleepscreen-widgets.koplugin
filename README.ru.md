@@ -18,10 +18,15 @@
 
 ## Настройка KOReader
 
-1. Включено **Settings** → **Screen** → **Sleep screen** → **Sleep screen message** → **Add custom message to sleep screen** 
-2. Откройте **Container and position** и выберите **Banner** (баннер), а не **Box**.
+1. Включите **Settings** → **Screen** → **Sleep screen** → **Sleep screen message** → **Add custom message to sleep screen**.
 
-Если что-то из этого не выполнено, KOReader покажет обычное сообщение сна.
+2. Откройте **Container and position** и выберите **Banner**, а не **Box**.
+
+Если что-то из этого не сделано, KOReader покажет обычное сообщение на экране сна вместо сетки.
+
+## Настройка плагина
+
+После включения плагина в **Plugin management** все его настройки находятся в **Screen → Screensaver → Sleepscreen widgets**. Здесь можно расставить виджеты в сетке, задать расстояние между ними и частоту обновления виджетов (по стандарту 10 минут).
 
 ## Установка
 
